@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  portal.presentation:
+    image: ${DOCKER_REGISTRY}portalpresentation
+    build:
+      context: .
+      dockerfile: Portal.Presentation\Dockerfile
