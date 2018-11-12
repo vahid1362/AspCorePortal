@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Portal.core.Infrastructure;
+using Portal.Service.News;
+using Portal.Standard.Infrastructure;
+using Portal.Standard.Service.Media;
+using Presentation3.Portal.Areas.Admin.Extensions;
 
 namespace Presentation3.Portal
 {
@@ -30,9 +37,20 @@ namespace Presentation3.Portal
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddDbContext<PortalDbContext>(c => c.UseSqlServer(Configuration.GetConnectionString("PortalContext")));
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile());
+            });
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddAutoMapper();
+            services.AddMvc().AddNToastNotifyToastr().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddKendo();
+            services.AddTransient(typeof(IRepository<>), typeof(EFRepository<>));
+            services.AddTransient<INewsService, NewsService>();
+            services.AddTransient<IPictureService, PictureService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,12 +69,16 @@ namespace Presentation3.Portal
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseNToastNotify();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area=Admin}/{controller=Home}/{action=Index}/{id?}"
+                );
             });
         }
     }
