@@ -24,43 +24,42 @@
                         <button type="submit" name="save" class="btn btn-success"><i class="fa fa-save fa-lg"></i>ذخیره</button>
                         <button type="submit" name="save-continue" class="btn bg-blue">
                             <i class="fa fa-save fa-lg"></i>
-                           ذخیره و ادامه
+                            ذخیره و ادامه
                         </button>
 
                         <a href="@Url.Action("List")" class="btn btn-default"><i class="fa fa-backward fa-lg"></i>بازگشت</a>
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
-             <div class="col-md-12">
-                        <!-- Custom Tabs (Pulled to the right) -->
-                        <div class="nav-tabs-custom">
-                            <ul class="nav nav-tabs pull-right">
-                                <li class="active"><a href="#tab_1-1" data-toggle="tab">محتوا</a></li>
-                                <li><a href="#tab_2-2" data-toggle="tab">تصاویر</a></li>
-                             
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tab_1-1">
-                                    @Html.Partial("_CreateOrUpdate",Model)
-                                </div>
-                                <!-- /.tab-pane -->
-                                <div class="tab-pane" id="tab_2-2">
-                                    @Html.Partial("_CreateOrUpdate.Picture",Model)
-                                </div>
-                                <!-- /.tab-pane -->
-                                
-                                <!-- /.tab-pane -->
+                <div class="col-md-12">
+                    <!-- Custom Tabs (Pulled to the right) -->
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs pull-right">
+                            <li class="active"><a href="#tab_1-1" data-toggle="tab">محتوا</a></li>
+                            <li><a href="#tab_2-2" data-toggle="tab">تصاویر</a></li>
+
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1-1">
+                                @Html.Partial("_CreateOrUpdate", Model)
                             </div>
-                            <!-- /.tab-content -->
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="tab_2-2">
+                                @Html.Partial("_CreateOrUpdate.Picture", Model)
+                            </div>
+                            <!-- /.tab-pane -->
+                            <!-- /.tab-pane -->
                         </div>
-                        <!-- nav-tabs-custom -->
+                        <!-- /.tab-content -->
                     </div>
-                
+                    <!-- nav-tabs-custom -->
+                </div>
+
             </div>
         </div>
-        
+
 
     </section>
 }

@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_AdminLayOut.cshtml";
 }
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new {@class = "form-horizontal"}))
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
 {
     <section class="content-header">
         <div class="row">
@@ -34,25 +34,24 @@
                         <ul class="nav nav-tabs pull-right">
                             <li class="active"><a href="#tab_1-1" data-toggle="tab">محتوا</a></li>
                             <li><a href="#tab_2-2" data-toggle="tab">تصاویر</a></li>
-                             
+
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_1-1">
-                                @Html.Partial("_CreateOrUpdate",Model)
+                                @Html.Partial("_CreateOrUpdate", Model)
                             </div>
                             <!-- /.tab-pane -->
                             <div class="tab-pane" id="tab_2-2">
-                                @Html.Partial("_CreateOrUpdate.Picture",Model)
+                                @Html.Partial("_CreateOrUpdate.Picture", Model)
                             </div>
                             <!-- /.tab-pane -->
-                                
                             <!-- /.tab-pane -->
                         </div>
                         <!-- /.tab-content -->
                     </div>
                     <!-- nav-tabs-custom -->
                 </div>
-                
+
             </div>
         </div>
 

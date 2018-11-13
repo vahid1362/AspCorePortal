@@ -33,6 +33,27 @@ namespace Portal.Standard.Service.Media
         {
             _pictureRepository = pictureRepository;
             _pictureBinaryRepository = pictureBinaryRepository;
+            _mediaSettings = new MediaSettings
+            {
+                AvatarPictureSize = 120,
+                ProductThumbPictureSize = 415,
+                ProductDetailsPictureSize = 550,
+                ProductThumbPictureSizeOnProductDetailsPage = 100,
+                AssociatedProductPictureSize = 220,
+                CategoryThumbPictureSize = 450,
+                ManufacturerThumbPictureSize = 420,
+                VendorThumbPictureSize = 450,
+                CartThumbPictureSize = 80,
+                MiniCartThumbPictureSize = 70,
+                AutoCompleteSearchThumbPictureSize = 20,
+                ImageSquarePictureSize = 32,
+                MaximumImageSize = 1980,
+                DefaultPictureZoomEnabled = false,
+                DefaultImageQuality = 80,
+                MultipleThumbDirectories = false,
+                ImportProductImagesUsingHash = true,
+                AzureCacheControlHeader = string.Empty
+            };
         }
 
 

@@ -58,7 +58,7 @@ namespace Presentation3.Portal.Areas.Admin.Controllers
         {
             return View();
         }
-
+        
         public IActionResult Create()
         {
             var groups = PrepareGroupSelectedListItem();
@@ -67,7 +67,7 @@ namespace Presentation3.Portal.Areas.Admin.Controllers
                 SelectListItems = groups
             });
         }
-
+        
         private List<SelectListItem> PrepareGroupSelectedListItem()
         {
             var groups = _newsService.GetGroups().Select(x => new SelectListItem()
@@ -108,14 +108,14 @@ namespace Presentation3.Portal.Areas.Admin.Controllers
 
             return RedirectToAction("List");
         }
-
+        
         public IActionResult Edit(long? contentId)
         {
             if (contentId == null)
                 _toastNotification.AddErrorToastMessage("خطا در پار متر ورودی");
 
             var content = _newsService.GetContentById(contentId.GetValueOrDefault());
-            var contentViewModel = _mapper.Map<ContentViewModel>(content);
+                        var contentViewModel = _mapper.Map<ContentViewModel>(content);
             var groups = PrepareGroupSelectedListItem();
 
             contentViewModel.SelectListItems = groups;
@@ -133,7 +133,7 @@ namespace Presentation3.Portal.Areas.Admin.Controllers
             if (content == null)
                 RedirectToAction("List");
             content = _mapper.Map<Content>(model);
-
+            
             _newsService.EditContent(content);
             _toastNotification.AddSuccessToastMessage("عملیات  با موفقیت صورت پذیرفت");
 
@@ -186,21 +186,21 @@ namespace Presentation3.Portal.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddContentPicture([FromBody]ContentPictureViewModel contentPictureViewModel)
         {
+           
+                var contePicture = _mapper.Map<ContentPicture>(contentPictureViewModel);
+                _newsService.AddContentPicture(contePicture);
+              return Json(new
+                {
+                    success = true,
 
-            var contePicture = _mapper.Map<ContentPicture>(contentPictureViewModel);
-            _newsService.AddContentPicture(contePicture);
-            return Json(new
-            {
-                success = true,
-
-
-            }, new JsonSerializerSettings()
-            {
-                Formatting = Formatting.Indented,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                Converters = { new StringEnumConverter() }
-            });
-
+                 
+                }, new JsonSerializerSettings()
+                {
+                    Formatting = Formatting.Indented,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    Converters = { new StringEnumConverter() }
+                });
+            
         }
 
         public IActionResult ContentPicture_Read([DataSourceRequest] DataSourceRequest request, long? contentId)
@@ -210,23 +210,22 @@ namespace Presentation3.Portal.Areas.Admin.Controllers
 
             var contentPictures = _newsService.GetContentPictures(contentId.GetValueOrDefault());
             var contentPictureViewModels = contentPictures.Select(x =>
-            {
-                var picture = _pictureService.GetPictureById(x.PictureId);
-                if (picture == null)
-                    throw new Exception("تصاویر نمی توانند بارگذاری  شوند");
-                var m = new ContentPictureViewModel
                 {
-                    Id = x.Id,
-                    ContentId = x.ContentId,
-                    PictureUrl = _pictureService.GetPictureUrl(picture),
-                    DisplayOrder = x.DisplayOrder,
-                    PictureId = x.PictureId
+                    var picture = _pictureService.GetPictureById(x.PictureId);
+                    if (picture == null)
+                        throw new Exception("تصاویر نمی توانند بارگذاری  شوند");
+                    var m = new ContentPictureViewModel
+                    {
+                        Id = x.Id,
+                        ContentId = x.ContentId,
+                        PictureUrl = _pictureService.GetPictureUrl(picture),
+                        DisplayOrder = x.DisplayOrder,
+                        PictureId = x.PictureId
 
 
-                };
-                return m;
-            }).ToList();
-
+                    };
+                    return m;}).ToList();
+             
             return Json(contentPictureViewModels.ToDataSourceResult(request));
         }
 

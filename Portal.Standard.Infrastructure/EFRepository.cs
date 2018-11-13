@@ -8,53 +8,53 @@ namespace Portal.Standard.Infrastructure
 {
     public class EFRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly PortalDbContext _marketingContext;
+        private readonly PortalDbContext _dbContext;
 
         public EFRepository(PortalDbContext marketingContext)
         {
-            _marketingContext = marketingContext;
+            _dbContext = marketingContext;
         }
         public T GetById(object id)
         {
-            return _marketingContext.Set<T>().Find(id);
+            return _dbContext.Set<T>().Find(id);
         }
 
         public void Insert(T entity)
         {
-            _marketingContext.Set<T>().Add(entity);
-            _marketingContext.SaveChanges();
+            _dbContext.Set<T>().Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public void Insert(IEnumerable<T> entities)
         {
-            _marketingContext.Set<T>().AddRange(entities);
-            _marketingContext.SaveChanges();
+            _dbContext.Set<T>().AddRange(entities);
+            _dbContext.SaveChanges();
         }
 
         public void Update(T entity)
         {
-            _marketingContext.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
         public void Update(IEnumerable<T> entities)
         {
-            _marketingContext.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
         public void Delete(T entity)
         {
-            _marketingContext.Set<T>().Remove(entity);
-            _marketingContext.SaveChanges();
+            _dbContext.Set<T>().Remove(entity);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(IEnumerable<T> entities)
         {
-            _marketingContext.Set<T>().RemoveRange(entities);
-            _marketingContext.SaveChanges();
+            _dbContext.Set<T>().RemoveRange(entities);
+            _dbContext.SaveChanges();
         }
 
-        public IQueryable<T> Table => _marketingContext.Set<T>();
+        public IQueryable<T> Table => _dbContext.Set<T>();
 
-        public IQueryable<T> TableNoTracking => _marketingContext.Set<T>().AsNoTracking();
+        public IQueryable<T> TableNoTracking => _dbContext.Set<T>().AsNoTracking();
     }
 }
